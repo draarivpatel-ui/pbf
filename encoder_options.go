@@ -14,7 +14,23 @@ import (
 	"m4o.io/pbf/v2/internal/encoder"
 )
 
+// BlobCompression is the compression algorithm of the PBF blobs.
+// It is the type of the WithCompression option.
+type BlobCompression = encoder.BlobCompression
+
 const (
+	// RAW stores blob data with no compression.
+	RAW BlobCompression = encoder.RAW
+	// ZLIB compresses blob data with zlib.
+	ZLIB BlobCompression = encoder.ZLIB
+	// LZMA compresses blob data with LZMA.
+	LZMA BlobCompression = encoder.LZMA
+	// LZ4 compresses blob data with LZ4.
+	LZ4 BlobCompression = encoder.LZ4
+	// ZSTD compresses blob data with Zstandard.
+	ZSTD BlobCompression = encoder.ZSTD
+
+	// DefaultBlobCompression is ZLIB.
 	DefaultBlobCompression = encoder.ZLIB
 
 	tempFileName = "entities.pbf"
@@ -29,7 +45,7 @@ var (
 
 // encoderOptions provides optional configuration parameters for Encoder construction.
 type encoderOptions struct {
-	compression encoder.BlobCompression
+	compression BlobCompression
 
 	store string
 	w     *os.File
@@ -48,7 +64,7 @@ type EncoderOption func(*encoderOptions)
 
 // WithCompression specifies the compression algorithm to use when encoding
 // PBF blobs.  The default is ZLIB.
-func WithCompression(compression encoder.BlobCompression) EncoderOption {
+func WithCompression(compression BlobCompression) EncoderOption {
 	return func(o *encoderOptions) {
 		o.compression = compression
 	}

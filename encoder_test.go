@@ -18,7 +18,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/proto"
 
-	"m4o.io/pbf/v2/internal/encoder"
 	"m4o.io/pbf/v2/internal/pb"
 	"m4o.io/pbf/v2/model"
 )
@@ -336,14 +335,14 @@ func TestRoundTripWithEachCompression(t *testing.T) {
 	}
 
 	tests := []struct {
-		compression encoder.BlobCompression
+		compression BlobCompression
 		wantData    any
 	}{
-		{encoder.RAW, &pb.Blob_Raw{}},
-		{encoder.ZLIB, &pb.Blob_ZlibData{}},
-		{encoder.LZMA, &pb.Blob_LzmaData{}},
-		{encoder.LZ4, &pb.Blob_Lz4Data{}},
-		{encoder.ZSTD, &pb.Blob_ZstdData{}},
+		{RAW, &pb.Blob_Raw{}},
+		{ZLIB, &pb.Blob_ZlibData{}},
+		{LZMA, &pb.Blob_LzmaData{}},
+		{LZ4, &pb.Blob_Lz4Data{}},
+		{ZSTD, &pb.Blob_ZstdData{}},
 	}
 
 	for _, tt := range tests {
